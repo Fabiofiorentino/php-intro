@@ -1,29 +1,38 @@
 <?php
 
+session_start();
+
 $nome = $_POST['nome'];
 $idade = $_POST['idade'];
 
 if(empty($nome)) 
 {
-    echo "O campo nome está vazio!";
+    $_SESSION['Mensagem de erro'] = "O campo nome está vazio!";
+    header('location: index.php');
     return;
 }
-
-if (strlen($nome) < 3)
+else if (strlen($nome) < 3)
 {
-    echo "nome invalido!";
+    $_SESSION['Mensagem de erro'] = "O nome é inválido.";
+    header('location: index.php');
     return;
 }
-
-if (strlen($nome) > 40)
+else if (strlen($nome) > 40)
 {
-    echo "nome muito extenso.";
+    $_SESSION['Mensagem de erro'] = "O nome está muito extenso";
+    header('location: index.php');
     return;
 }
-
-if(!is_numeric($idade)) 
+else if(!is_numeric($idade)) 
 {
-    echo "Informe um NUMERO para idade.";
+    $_SESSION['Mensagem de erro'] = "Informe um NUMERO para idade";
+    header('location: index.php');
+    return;
+}
+else 
+{
+    $_SESSION['Mensagem de sucesso'] = "$nome tem $idade anos";
+    header('location: index.php');
     return;
 }
 
